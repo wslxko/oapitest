@@ -9,10 +9,9 @@ from datetime import datetime
 import threading
 import readConfig as readConfig
 from common.Log import MyLog
-import zipfile
-import glob
 
 localReadConfig = readConfig.ReadConfig()
+locallog = MyLog.get_log()
 
 
 class Email:
@@ -95,22 +94,10 @@ class Email:
 
         # if the file content is not null, then config the email file
         if self.check_file():
-
-            reportpath = self.log.get_result_path()
-            zippath = os.path.join(readConfig.proDir, "result", "test.zip")
-
-            # zip file
-            files = glob.glob(reportpath + '\*')
-            f = zipfile.ZipFile(zippath, 'w', zipfile.ZIP_DEFLATED)
-            for file in files:
-                # 修改压缩文件的目录结构
-                f.write(file, '/report/' + os.path.basename(file))
-            f.close()
-
-            reportfile = open(zippath, 'rb').read()
-            filehtml = MIMEText(reportfile, 'base64', 'utf-8')
+            reportfile = locallog.get_report_path()
+            filehtml = MIMEText(open(reportfile).read(), 'base64', 'utf-8')
             filehtml['Content-Type'] = 'application/octet-stream'
-            filehtml['Content-Disposition'] = 'attachment; filename="test.zip"'
+            filehtml['Content-Disposition'] = 'attachment; filename="report.html"'
             self.msg.attach(filehtml)
 
     def check_file(self):
