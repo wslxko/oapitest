@@ -6,7 +6,7 @@ node {
             step{
                 scripts{
                 timeout(time: 20,unit:'MINUTES'){
-                bat 'python3 runtest.py'
+                python3 runner.py
                 }
             }
         }
