@@ -3,8 +3,7 @@ node {
                 git([url: 'https://github.com/wslxko/oapitest.git', branch: 'master'])
         }
         stage('Test') {
-
-                bat runner.py
+        bat 'python3 runtest.py'
         }
     }
 
