@@ -1,15 +1,10 @@
-node {
-        stage('checkout') {
-                git([url: 'https://github.com/wslxko/oapitest.git', branch: 'master'])
-        }
-        stage('Test') {
-            step{
-                scripts{
-                timeout(time: 20,unit:'MINUTES'){
-                python3 runner.py
-                }
+pipeline {
+    agent { docker { image 'python:3.7.0' } }
+    stages {
+        stage('build') {
+            steps {
+                sh 'python --version'
             }
         }
-   }
+    }
 }
-
