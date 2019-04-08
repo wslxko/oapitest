@@ -3,7 +3,7 @@ node {
         sh 'echo "Hello World"'
         sh '''
             echo "Multiline shell steps works too"
-            ls -lah
+            python3 runner.py
         '''
     }
 }
